@@ -1,0 +1,8 @@
+.leftMenu {
+    border-right: .5px solid #cdcdcd;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+}
