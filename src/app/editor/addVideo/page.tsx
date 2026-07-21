@@ -1,6 +1,10 @@
-export default function AddVideoPage() {
+import type { Metadata } from "next";
+import { AddVideoScreen } from "@/src/screen/AddVideoScreen";
 
-  return (
-    <div>AddVideoPage</div>
-  );
+export const metadata: Metadata = {
+  title: "Add new video",
+};
+
+export default function AddVideoPage() {
+  return <AddVideoScreen />;
 }

@@ -1,15 +1,17 @@
-type ProfilePageProps = {
-  params: Promise<{ profileId: string}>
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile",
 };
 
-export default async function ProfilePage({
-  params
-}: ProfilePageProps) {
+type ProfilePageProps = {
+  params: Promise<{ profileId: string }>;
+};
+
+export default async function ProfilePage({ params }: ProfilePageProps) {
   const data = await params;
 
   const profileId = data.profileId;
 
-  return (
-    <div>ProfileId: {profileId}</div>
-  );
+  return <div>ProfileId: {profileId}</div>;
 }
