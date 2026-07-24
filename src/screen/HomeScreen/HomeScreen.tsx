@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export const HomeScreen = () => {
@@ -27,13 +29,14 @@ export const HomeScreen = () => {
     <div>
       {data && data?.length > 0 ? (
         data.map((videoId) => (
-          <iframe
-            key={videoId}
-            width="150"
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          ></iframe>
+          <Link href={`/video/${videoId}`} key={videoId}>
+            <Image
+              width="250"
+              height="150"
+              src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+              alt={`video ${videoId}`}
+            />
+          </Link>
         ))
       ) : (
         <div>Not videos</div>
