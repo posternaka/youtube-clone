@@ -1,1 +1,2 @@
-export { parseYouTube } from './youtubeParser';
+export * from './youtubeParser';
+export * from './isAllowHost';

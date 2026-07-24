@@ -2,15 +2,48 @@
 
 import { useState } from "react";
 
-import { parseYouTube } from "@/src/shared/libs";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-import { useForm, SubmitHandler } from "react-hook-form";
+import {
+  isAllowedHost,
+  YOUTUBE_DOMAINS,
+  parseYouTube,
+} from "@/src/shared/libs";
+
+const schema = z.object({
+  videoUrl: z
+    .string()
+    .min(1, { message: "The field must not be empty." })
+    .superRefine((url, ctx) => {
+      let parsedUrl: URL;
+
+      try {
+        parsedUrl = new URL(url);
+      } catch {
+        ctx.addIssue({
+          code: "custom",
+          message: `The URL must be a link.`,
+          input: url,
+        });
+
+        return;
+      }
+
+      if (!isAllowedHost(parsedUrl.host, YOUTUBE_DOMAINS)) {
+        ctx.addIssue({
+          code: "custom",
+          message: "The URL must be on YouTube",
+          input: url,
+        });
+      }
+    }),
+});
 
 type Inputs = {
   videoUrl: string;
 };
-
-// https://www.youtube.com/watch?v=oHAmjGo7h58
 
 export const AddVideoScreen = () => {
   const [videoId, setVideoId] = useState("");
@@ -18,40 +51,34 @@ export const AddVideoScreen = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: Inputs) => {
-    const url = data.videoUrl;
+    const url = new URL(data.videoUrl);
 
-    if (!url) return;
-
-    let finalUrl: URL | null = null;
-
-    try {
-      finalUrl = new URL(url);
-    } catch (error) {
-      console.error(error);
-    }
-
-    if (!finalUrl) return;
-
-    const videoId = parseYouTube(finalUrl);
+    const videoId = parseYouTube(url);
 
     if (!videoId) return;
 
     setVideoId(videoId);
   };
 
+  const hasVideoUrlInputError = !!errors.videoUrl?.message;
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          placeholder="Link on Youtube video"
-          {...register("videoUrl")}
-        />
+        <label>
+          <input
+            type="text"
+            placeholder="Link on Youtube video"
+            {...register("videoUrl")}
+          />
+          {hasVideoUrlInputError && (
+            <p style={{ color: "red" }}> {errors.videoUrl?.message} </p>
+          )}
+        </label>
         <button>Download</button>
       </form>
       <iframe
