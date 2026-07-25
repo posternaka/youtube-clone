@@ -1,4 +1,56 @@
 .header {
-    height: 100%;
-    border-bottom: .5px solid #cdcdcd;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.createVideoLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 111px;
+  height: 35px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.1);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transition: background 0.3s;
+  }
+
+  &::before {
+    content: "+";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -5px;
+    font-size: 24px;
+    font-weight: 100;
+  }
+}
+
+.yourProfileLink {
+  display: block;
+  width: 32px;
+  height: 32px;
+  background: gray;
+  border-radius: 50%;
+
+  &:hover {
+    background: rgb(199, 199, 199);
+    transition: background 0.3s;
+  }
+
+  .hiddenText {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+}
+
+.partRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

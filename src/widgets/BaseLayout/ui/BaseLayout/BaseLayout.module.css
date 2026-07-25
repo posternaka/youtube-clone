@@ -1,10 +1,12 @@
 .container {
-    display: grid;
-    grid-template-columns: 360px auto;
-    grid-template-rows: 40px auto;
-    height: 100dvh;
+  display: grid;
+  grid-template-columns: 360px auto;
+  grid-template-rows: 55px auto;
+  height: 100dvh;
 
-    > :first-child {
-        grid-column: span 2 / span 2;
-    }
+  > :first-child {
+    grid-column: span 2 / span 2;
+    align-content: center;
+    padding: 0 16px;
+  }
 }
