@@ -11,6 +11,7 @@ export const Header = ({ profileId }: HeaderProps) => {
     <header className={s.header}>
       <Link href="/">
         <Image
+          unoptimized
           width="53"
           height="20"
           src="/logo.svg"
