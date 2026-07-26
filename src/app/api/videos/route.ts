@@ -6,6 +6,11 @@ export async function GET() {
     videosData.add('M9z3ucb6f7c');
     videosData.add('2I2D7q0AsL8');
     videosData.add('nRNHcCHbPx0');
+    videosData.add('eAajijL6e0w');
+    videosData.add('N17ZDhB88Nk');
+    videosData.add('99ds4d88thk');
+    videosData.add('wgej_DhuoxA');
+    videosData.add('eQmSOvrk1_U');
     
     return Response.json({ data: Array.from(videosData) });
 }

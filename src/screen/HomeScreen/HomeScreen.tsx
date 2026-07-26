@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import s from "./HomeScreen.module.css";
+
 export const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<string[] | null>(null);
@@ -26,17 +28,36 @@ export const HomeScreen = () => {
   }
 
   return (
-    <div>
+    <div className={s.container}>
       {data && data?.length > 0 ? (
         data.map((videoId) => (
-          <Link href={`/video/${videoId}`} key={videoId}>
-            <Image
-              width="250"
-              height="150"
-              src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-              alt={`video ${videoId}`}
-            />
-          </Link>
+          <div className={s.videoBlock} key={videoId}>
+            <Link href={`/video/${videoId}`} className={s.videoPreviewLink}>
+              <Image
+                width="350"
+                height="197"
+                src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+                alt={`video ${videoId}`}
+                className={s.videoImg}
+              />
+            </Link>
+
+            <div className={s.videoInfoContainer}>
+              <Link href={`/2`} className={s.channelImg}>
+                <div className={s.hiddenText}>Chaтnel name</div>
+              </Link>
+
+              <div className={s.videoInfo}>
+                <Link href={`/video/${videoId}`} className={s.videoNameLink}>
+                  Video name
+                </Link>
+                <Link href={`/4`} className={s.videoChannelLink}>
+                  Channel name
+                </Link>
+              </div>
+            </div>
+            <Link href={`/video/${videoId}`} className={s.link} />
+          </div>
         ))
       ) : (
         <div>Not videos</div>
