@@ -34,8 +34,7 @@ export const HomeScreen = () => {
           <div className={s.videoBlock} key={videoId}>
             <Link href={`/video/${videoId}`} className={s.videoPreviewLink}>
               <Image
-                width="350"
-                height="197"
+                fill
                 src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
                 alt={`video ${videoId}`}
                 className={s.videoImg}

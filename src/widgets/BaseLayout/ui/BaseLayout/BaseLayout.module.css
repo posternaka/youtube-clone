@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: min-content auto;
   grid-template-rows: 55px auto;
+  padding-right: 12px;
   height: 100dvh;
 
   > :first-child {
