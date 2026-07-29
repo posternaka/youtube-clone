@@ -4,6 +4,7 @@
   grid-template-rows: 55px auto;
   padding-right: 12px;
   height: 100dvh;
+  overflow: hidden;
 
   > :first-child {
     grid-column: span 2 / span 2;

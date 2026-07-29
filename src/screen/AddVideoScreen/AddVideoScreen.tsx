@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
+import s from "./AddVideoScreen.module.css";
+
 import {
   isAllowedHost,
   YOUTUBE_DOMAINS,
@@ -77,27 +79,32 @@ export const AddVideoScreen = () => {
   const hasVideoUrlInputError = !!errors.videoUrl?.message;
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>
+    <div className={s.container}>
+      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+        <label className={s.label}>
           <input
+            className={s.input}
             type="text"
             placeholder="Link on Youtube video"
             {...register("videoUrl")}
           />
           {hasVideoUrlInputError && (
-            <p style={{ color: "red" }}> {errors.videoUrl?.message} </p>
+            <p className={s.error}> {errors.videoUrl?.message} </p>
           )}
         </label>
-        <button>Download</button>
+        <button className={s.submit}>Download</button>
       </form>
-      <iframe
-        width="560"
-        height="315"
-        src={`https://www.youtube.com/embed/${videoId}`}
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      ></iframe>
+
+      {videoId && (
+        <iframe
+          className={s.iframe}
+          width="700"
+          height="350"
+          src={`https://www.youtube.com/embed/${videoId}`}
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        />
+      )}
     </div>
   );
 };
