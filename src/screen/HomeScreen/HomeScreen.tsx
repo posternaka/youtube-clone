@@ -48,7 +48,7 @@ export const HomeScreen = () => {
 
               <div className={s.videoInfo}>
                 <Link href={`/video/${videoId}`} className={s.videoNameLink}>
-                  Video name
+                  <b>Video name</b>
                 </Link>
                 <Link href={`/4`} className={s.videoChannelLink}>
                   Channel name
