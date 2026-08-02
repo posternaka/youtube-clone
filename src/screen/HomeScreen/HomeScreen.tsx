@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AllVideoDto } from "@/src/shared/types/typesFromBackend";
+import { GetAllVideosDto } from "@/src/shared/types/typesFromBackend";
 
 import s from "./HomeScreen.module.css";
 
@@ -11,13 +11,13 @@ import s from "./HomeScreen.module.css";
 
 export const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<AllVideoDto["data"] | null>(null);
+  const [data, setData] = useState<GetAllVideosDto["data"] | null>(null);
 
   useEffect(() => {
     (async () => {
       try {
         const getData = await fetch("/api/videos");
-        const response = (await getData.json()) as AllVideoDto;
+        const response = (await getData.json()) as GetAllVideosDto;
 
         setData(response.data);
       } finally {
@@ -33,7 +33,7 @@ export const HomeScreen = () => {
   return (
     <div className={s.container}>
       {data && data?.length > 0 ? (
-        data.map(({ videoId, title, authorName, authorlUrl }) => (
+        data.map(({ videoId, title, authorName, authorUrl }) => (
           <div className={s.videoBlock} key={videoId}>
             <Link href={`/video/${videoId}`} className={s.videoPreviewLink}>
               <Image
@@ -45,7 +45,7 @@ export const HomeScreen = () => {
             </Link>
 
             <div className={s.videoInfoContainer}>
-              <Link href={`/profile/${authorlUrl}`} className={s.channelImg}>
+              <Link href={`/profile/${authorUrl}`} className={s.channelImg}>
                 <div className={s.hiddenText}>{authorName}</div>
               </Link>
 
@@ -54,7 +54,7 @@ export const HomeScreen = () => {
                   <b>{title}</b>
                 </Link>
                 <Link
-                  href={`/profile/${authorlUrl}`}
+                  href={`/profile/${authorUrl}`}
                   className={s.videoChannelLink}
                 >
                   {authorName}

@@ -1,4 +1,4 @@
-import { AllVideoDto } from "../../../shared/types/typesFromBackend";
+import { GetAllVideosDto } from "../../../shared/types/typesFromBackend";
 
 type OEmbedVideoInfo = {
     title: string,
@@ -29,18 +29,48 @@ const videosData = new Set<string>([
     'eQmSOvrk1_U'
 ]);
 
-export async function GET() {
+export async function GET(request: Request) {
+    console.log(request.url);
+    const urlObject = new URL(request.url);
+    const videoId = urlObject.searchParams.get('videoId');
+    console.log(videoId);
+    
+    
+    if (videoId) {
+        try {
+            const rawResults = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
+
+            const videoInfo = await rawResults.json() as OEmbedVideoInfo;
+
+            const authorUrl = videoInfo.author_url.split('/').at(-1); 
+
+            const results = {
+                videoId,
+                title: videoInfo.title,
+                authorName: videoInfo.author_name,
+                authorUrl
+            }
+            
+            return Response.json({ ok: true, data: results });
+        } catch (error) {
+            console.error(error);
+            return Response.json({ ok: false, data: null }, { status: 500 });
+        }
+    }
+
     try {
         const promises = [...videosData].map(async (videoId) => {
         const rawResults = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
 
         const videoInfo = await rawResults.json() as OEmbedVideoInfo;
 
+        const authorUrl = videoInfo.author_url.split('/').at(-1); 
+
         return {
                 videoId,
                 title: videoInfo.title,
                 authorName: videoInfo.author_name,
-                authorlUrl: videoInfo.author_url
+                authorUrl
             }
         });
 
