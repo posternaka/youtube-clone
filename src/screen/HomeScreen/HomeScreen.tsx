@@ -2,33 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { GetAllVideosDto } from "@/src/shared/types/typesFromBackend";
 
 import s from "./HomeScreen.module.css";
 
-// https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=FvOpPeKSf_4&format=json
+type HomeScreenProps = {
+  data: GetAllVideosDto["data"];
+};
 
-export const HomeScreen = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<GetAllVideosDto["data"] | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const getData = await fetch("/api/videos");
-        const response = (await getData.json()) as GetAllVideosDto;
-
-        setData(response.data);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+export const HomeScreen = ({ data }: HomeScreenProps) => {
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div className={s.container}>
