@@ -1,49 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import s from "./VideoScreen.module.css";
 import Link from "next/link";
-import { GetOneVideoDto, VideoDto } from "@/src/shared/types/typesFromBackend";
+import { VideoDto } from "@/src/shared/types/typesFromBackend";
 
 type VedioScreenProps = {
-  videoId: string;
+  data: VideoDto;
 };
 
-export const VideoScreen = ({ videoId }: VedioScreenProps) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<GetOneVideoDto["data"] | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const getData = await fetch(`/api/videos?videoId=${videoId}`);
-        const response = (await getData.json()) as GetOneVideoDto;
-
-        console.log(response);
-
-        if (response.data) {
-          setData(response.data);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, [videoId]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!data) return null;
-
+export const VideoScreen = ({ data }: VedioScreenProps) => {
   return (
     <div className={s.container}>
       <iframe
         className={s.iframe}
-        key={videoId}
+        key={data.videoId}
         width="550"
         height="300"
-        src={`https://www.youtube.com/embed/${videoId}?autoplay=0`}
+        src={`https://www.youtube.com/embed/${data.videoId}?autoplay=1`}
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       />
