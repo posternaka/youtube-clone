@@ -16,7 +16,7 @@ export default async function VideoPage({ params }: VideoPageProps) {
   try {
     const { videoId } = await params;
     const getData = await fetch(
-      `http://localhost:3000/api/videos?videoId=${videoId}`,
+      `${process.env.SERVER_API_URL}/api/videos?videoId=${videoId}`,
     );
 
     const response = (await getData.json()) as GetOneVideoDto;

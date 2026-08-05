@@ -30,10 +30,8 @@ const videosData = new Set<string>([
 ]);
 
 export async function GET(request: Request) {
-    console.log(request.url);
     const urlObject = new URL(request.url);
     const videoId = urlObject.searchParams.get('videoId');
-    console.log(videoId);
     
     
     if (videoId) {

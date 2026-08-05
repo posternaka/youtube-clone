@@ -5,7 +5,7 @@ export default async function HomePage() {
   let data: GetAllVideosDto["data"] | null = null;
 
   try {
-    const getData = await fetch("http://localhost:3000/api/videos");
+    const getData = await fetch(`${process.env.SERVER_API_URL}/api/videos`);
     const response = (await getData.json()) as GetAllVideosDto;
     data = response.data;
   } catch {

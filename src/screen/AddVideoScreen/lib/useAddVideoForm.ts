@@ -1,18 +1,13 @@
-"use client";
-
-import { useState } from "react";
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-
-import s from "./AddVideoScreen.module.css";
 
 import {
   isAllowedHost,
   YOUTUBE_DOMAINS,
   parseYouTube,
 } from "@/src/shared/libs";
+import { useState } from "react";
 
 const schema = z.object({
   videoUrl: z
@@ -47,7 +42,7 @@ type Inputs = {
   videoUrl: string;
 };
 
-export const AddVideoScreen = () => {
+export const useAddVideoForm = () => {
   const [videoId, setVideoId] = useState("");
 
   const {
@@ -55,8 +50,8 @@ export const AddVideoScreen = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
-
-  const onSubmit = async (data: Inputs) => {
+  
+  const onSubmitHandler = async (data: Inputs) => {
     const url = new URL(data.videoUrl);
 
     const videoId = parseYouTube(url);
@@ -69,42 +64,12 @@ export const AddVideoScreen = () => {
       method: "POST",
       body: JSON.stringify({ videoId: videoId }),
     });
-
-    const getData = await fetch("/api/videos");
-
-    const response = await getData.json();
-    console.log("response", response);
   };
 
-  const hasVideoUrlInputError = !!errors.videoUrl?.message;
-
-  return (
-    <div className={s.container}>
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <label className={s.label}>
-          <input
-            className={s.input}
-            type="text"
-            placeholder="Link on Youtube video"
-            {...register("videoUrl")}
-          />
-          {hasVideoUrlInputError && (
-            <p className={s.error}> {errors.videoUrl?.message} </p>
-          )}
-        </label>
-        <button className={s.submit}>Download</button>
-      </form>
-
-      {videoId && (
-        <iframe
-          className={s.iframe}
-          width="700"
-          height="350"
-          src={`https://www.youtube.com/embed/${videoId}`}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        />
-      )}
-    </div>
-  );
-};
+  return {
+    register,
+    errors,
+    videoId,
+    onSubmit: handleSubmit(onSubmitHandler)
+  }
+}
