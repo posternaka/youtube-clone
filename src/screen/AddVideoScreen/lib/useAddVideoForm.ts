@@ -32,14 +32,16 @@ const schema = z.object({
         ctx.addIssue({
           code: "custom",
           message: "The URL must be on YouTube",
-          input: url,
+          input: url
         });
       }
     }),
+  videoCategory: z.string()
 });
 
 type Inputs = {
   videoUrl: string;
+  videoCategory: string;
 };
 
 export const useAddVideoForm = () => {
@@ -62,7 +64,7 @@ export const useAddVideoForm = () => {
 
     await fetch("/api/videos", {
       method: "POST",
-      body: JSON.stringify({ videoId: videoId }),
+      body: JSON.stringify({ videoId: videoId, categoryId: data.videoCategory }),
     });
   };
 

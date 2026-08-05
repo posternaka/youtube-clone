@@ -3,6 +3,14 @@
 import { useAddVideoForm } from "../../lib/useAddVideoForm";
 import s from "./AddVideoScreen.module.css";
 
+const CATEGORIES = [
+  { id: "game", title: "Game" },
+  { id: "news", title: "News" },
+  { id: "humor", title: "Humor" },
+  { id: "music", title: "Music" },
+  { id: "sport", title: "Sport" },
+];
+
 export const AddVideoScreen = () => {
   const { videoId, errors, register, onSubmit } = useAddVideoForm();
 
@@ -11,6 +19,13 @@ export const AddVideoScreen = () => {
   return (
     <div className={s.container}>
       <form className={s.form} onSubmit={onSubmit}>
+        <select {...register("videoCategory")}>
+          {CATEGORIES.map((data) => (
+            <option key={data.id} value={data.title}>
+              {data.title}
+            </option>
+          ))}
+        </select>
         <label className={s.label}>
           <input
             className={s.input}
