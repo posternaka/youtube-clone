@@ -20,7 +20,7 @@ const schema = z.object({
         parsedUrl = new URL(url);
       } catch {
         ctx.addIssue({
-          code: "custom",
+          code: "custom", 
           message: `The URL must be a link.`,
           input: url,
         });

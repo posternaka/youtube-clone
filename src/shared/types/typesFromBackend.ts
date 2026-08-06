@@ -1,6 +1,7 @@
 export type VideoDto = {
   videoId: string;
   title: string;
+  category: string;
   authorName: string;
   authorUrl: string;
 };
@@ -13,4 +14,5 @@ export type GetOneVideoDto = {
 export type GetAllVideosDto = {
   ok: boolean,
   data: VideoDto[];
+  categories: string[]; 
 }

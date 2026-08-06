@@ -1,4 +1,7 @@
 .container {
+}
+
+.videoGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding-bottom: 32px;
