@@ -1,15 +1,8 @@
 "use client";
 
+import { VIDEO_CATEGORIES } from "@/src/shared/constants/categories";
 import { useAddVideoForm } from "../../lib/useAddVideoForm";
 import s from "./AddVideoScreen.module.css";
-
-const CATEGORIES = [
-  { id: "game", title: "Game" },
-  { id: "news", title: "News" },
-  { id: "humor", title: "Humor" },
-  { id: "music", title: "Music" },
-  { id: "sport", title: "Sport" },
-];
 
 export const AddVideoScreen = () => {
   const { videoId, errors, register, onSubmit } = useAddVideoForm();
@@ -20,7 +13,7 @@ export const AddVideoScreen = () => {
     <div className={s.container}>
       <form className={s.form} onSubmit={onSubmit}>
         <select {...register("videoCategory")}>
-          {CATEGORIES.map((data) => (
+          {VIDEO_CATEGORIES.map((data) => (
             <option key={data.id} value={data.title}>
               {data.title}
             </option>

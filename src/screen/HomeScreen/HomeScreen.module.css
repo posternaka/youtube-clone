@@ -1,10 +1,21 @@
 .container {
+  padding-bottom: 32px;
+}
+
+.categoriesContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.categoriesLink {
+  border: 1px solid white;
+  border-radius: 12px;
+  padding: 8px 16px;
 }
 
 .videoGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding-bottom: 32px;
 }
 
 .videoBlock {

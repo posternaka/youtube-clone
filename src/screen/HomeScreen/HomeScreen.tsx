@@ -3,19 +3,31 @@
 import Image from "next/image";
 import Link from "next/link";
 import { GetAllVideosDto } from "@/src/shared/types/typesFromBackend";
+import { VIDEO_CATEGORIES } from "@/src/shared/constants/categories";
 
 import s from "./HomeScreen.module.css";
 
 type HomeScreenProps = {
   data: GetAllVideosDto["data"];
-  categories: GetAllVideosDto["categories"];
+  categories: typeof VIDEO_CATEGORIES;
 };
 
 export const HomeScreen = ({ data, categories }: HomeScreenProps) => {
-  console.log(categories);
-
   return (
     <div className={s.container}>
+      <div className={s.categoriesContainer}>
+        {categories.length > 0 &&
+          categories.map((category) => (
+            <Link
+              href={`/${category.id}`}
+              key={category.id}
+              className={s.categoriesLink}
+            >
+              {category.title}
+            </Link>
+          ))}
+      </div>
+
       <div className={s.videoGrid}>
         {data?.length > 0 ? (
           data.map(({ videoId, title, authorName, authorUrl }) => (
