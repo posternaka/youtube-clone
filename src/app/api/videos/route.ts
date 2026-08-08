@@ -34,19 +34,19 @@ const videosData = new Map<string, VideoDataContent>([
 
 export async function GET(request: Request) {
     const urlObject = new URL(request.url);
-    const videoId = urlObject.searchParams.get('videoId');
+    const videoIdParam = urlObject.searchParams.get('videoId');
+    const categoryIdParam = urlObject.searchParams.get('categoryId');
     
-    
-    if (videoId) {
+    if (videoIdParam) {
         try {
-            const rawResults = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
+            const rawResults = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoIdParam}&format=json`);
 
             const videoInfo = await rawResults.json() as OEmbedVideoInfo;
 
             const authorUrl = videoInfo.author_url.split('/').at(-1); 
 
             const results = {
-                videoId,
+                videoId: videoIdParam,
                 title: videoInfo.title,
                 authorName: videoInfo.author_name,
                 authorUrl
@@ -62,9 +62,12 @@ export async function GET(request: Request) {
     try {
         const categories: string[] = [];
 
-        const promises = [...videosData].map(async (data) => {
+        const promises = [...videosData]
+        .filter(data => categoryIdParam ? data[1].categoryId === categoryIdParam : true)
+        .map(async (data) => {
             const videoId = data[1].id;
             const categoryId = data[1].categoryId;
+
             const rawResults = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
 
             const videoInfo = await rawResults.json() as OEmbedVideoInfo;
@@ -86,7 +89,7 @@ export async function GET(request: Request) {
 
         const results = await Promise.all(promises);
         
-        return Response.json({ ok: true, data: results, categories });
+        return Response.json({ ok: true, data: results, ...(categoryIdParam ? {} : { categories }) });
     } catch (error) {
         return Response.json({ ok: false, data: [] }, { status: 500 });
     }

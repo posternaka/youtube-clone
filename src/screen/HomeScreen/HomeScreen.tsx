@@ -9,18 +9,19 @@ import s from "./HomeScreen.module.css";
 
 type HomeScreenProps = {
   data: GetAllVideosDto["data"];
-  categories: typeof VIDEO_CATEGORIES;
+  categories?: typeof VIDEO_CATEGORIES;
 };
 
 export const HomeScreen = ({ data, categories }: HomeScreenProps) => {
   return (
     <div className={s.container}>
       <div className={s.categoriesContainer}>
-        {categories.length > 0 &&
+        {categories &&
+          categories.length > 0 &&
           categories.map((category) => (
             <Link
-              href={`/${category.id}`}
               key={category.id}
+              href={`/${category.id}`}
               className={s.categoriesLink}
             >
               {category.title}
