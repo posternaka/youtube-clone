@@ -1,4 +1,5 @@
 import { HomeScreen } from "@/src/screen/HomeScreen";
+import { VIDEO_CATEGORIES } from "@/src/shared/constants/categories";
 import { GetAllVideosDto } from "@/src/shared/types/typesFromBackend";
 import type { Metadata } from "next";
 
@@ -11,7 +12,8 @@ type CategoryPageProps = {
 };
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  let data = null;
+  let data: GetAllVideosDto["data"] | null = null;
+  let categories: GetAllVideosDto["categories"] | null = null;
 
   try {
     const { categoryId } = await params;
@@ -22,6 +24,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     const response = (await getData.json()) as GetAllVideosDto;
 
     data = response.data;
+    categories = response.categories;
   } catch (error) {
     console.error("Failed to load video:", error);
   }
@@ -30,5 +33,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     return <div>Video not found</div>;
   }
 
-  return <HomeScreen data={data} />;
+  const finalCategories = VIDEO_CATEGORIES.filter(({ id }) =>
+    categories?.includes(id),
+  );
+
+  return <HomeScreen data={data} categories={finalCategories} />;
 }

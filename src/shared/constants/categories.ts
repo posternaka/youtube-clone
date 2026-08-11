@@ -1,5 +1,5 @@
 export const VIDEO_CATEGORIES = [
-  { id: "game", title: "Game" },
+  { id: "games", title: "Games" },
   { id: "news", title: "News" },
   { id: "humor", title: "Humor" },
   { id: "music", title: "Music" },
