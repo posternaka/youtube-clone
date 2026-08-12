@@ -1,10 +1,37 @@
 import { VideoScreen } from "@/src/screen/VideoScreen";
-import { GetOneVideoDto } from "@/src/shared/types/typesFromBackend";
+import {
+  GetOneVideoDto,
+  OEmbedVideoInfo,
+} from "@/src/shared/types/typesFromBackend";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Video",
-};
+export async function generateMetadata({
+  params,
+}: VideoPageProps): Promise<Metadata> {
+  const data = await params;
+  const videoId = data.videoId;
+
+  try {
+    const getData = await fetch(
+      `${process.env.SERVER_API_URL}/api/videos?videoId=${videoId}`,
+    );
+
+    const response = (await getData.json()) as GetOneVideoDto;
+
+    if (!response) {
+      throw new Error("Not data about video");
+    }
+
+    return {
+      title: `Video: ${response.data?.title}`,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      title: "Something went wrong",
+    };
+  }
+}
 
 type VideoPageProps = {
   params: Promise<{ videoId: string }>;

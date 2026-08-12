@@ -3,9 +3,26 @@ import { VIDEO_CATEGORIES } from "@/src/shared/constants/categories";
 import { GetAllVideosDto } from "@/src/shared/types/typesFromBackend";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Category is ...",
-};
+export async function generateMetadata({
+  params,
+}: CategoryPageProps): Promise<Metadata> {
+  const data = await params;
+  const categoryId = data.categoryId;
+
+  const foundCategory = VIDEO_CATEGORIES.find(
+    (category) => category.id === categoryId,
+  );
+
+  if (!foundCategory) {
+    return {
+      title: "Video of unknown category",
+    };
+  }
+
+  return {
+    title: `Category is: ${foundCategory.title}`,
+  };
+}
 
 type CategoryPageProps = {
   params: Promise<{ categoryId: string }>;
