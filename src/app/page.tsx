@@ -1,5 +1,5 @@
-import { HomeScreen } from "../../screen/HomeScreen";
-import { GetAllVideosDto } from "../../shared/types/typesFromBackend";
+import { HomeScreen } from "../screen/HomeScreen";
+import { GetAllVideosDto } from "../shared/types/typesFromBackend";
 import { VIDEO_CATEGORIES } from "@/src/shared/constants/categories";
 
 export default async function HomePage() {
