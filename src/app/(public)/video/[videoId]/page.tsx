@@ -1,8 +1,5 @@
 import { VideoScreen } from "@/src/screen/VideoScreen";
-import {
-  GetOneVideoDto,
-  OEmbedVideoInfo,
-} from "@/src/shared/types/typesFromBackend";
+import { GetOneVideoDto } from "@/src/shared/types/typesFromBackend";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
