@@ -1,0 +1,56 @@
+"use client";
+
+import { GetAllVideosDto } from "@/src/shared/types/typesFromBackend";
+import s from "../HomeScreen/HomeScreen.module.css";
+import Link from "next/link";
+import Image from "next/image";
+
+type MyVideosScreenProps = {
+  data: GetAllVideosDto["data"];
+};
+
+export const MyVideosScreen = ({ data }: MyVideosScreenProps) => {
+  console.log(data);
+
+  return (
+    <div className={s.container}>
+      <div className={s.videoGrid}>
+        {data?.length > 0 ? (
+          data.map(({ videoId, title, authorName, authorUrl }) => (
+            <div className={s.videoBlock} key={videoId}>
+              <Link href={`/video/${videoId}`} className={s.videoPreviewLink}>
+                <Image
+                  fill
+                  src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+                  alt={`video ${videoId}`}
+                  className={s.videoImg}
+                />
+              </Link>
+
+              <div className={s.videoInfoContainer}>
+                <Link href={`/profile/${authorUrl}`} className={s.channelImg}>
+                  <div className={s.hiddenText}>{authorName}</div>
+                </Link>
+
+                <div className={s.videoInfo}>
+                  <Link href={`/video/${videoId}`} className={s.videoNameLink}>
+                    <b>{title}</b>
+                  </Link>
+                  <Link
+                    href={`/profile/${authorUrl}`}
+                    className={s.videoChannelLink}
+                  >
+                    {authorName}
+                  </Link>
+                </div>
+              </div>
+              <Link href={`/video/${videoId}`} className={s.link} />
+            </div>
+          ))
+        ) : (
+          <div>Not videos</div>
+        )}
+      </div>
+    </div>
+  );
+};

@@ -3,25 +3,27 @@ import { OEmbedVideoInfo } from "@/src/shared/types/typesFromBackend";
 type VideoDataContent = {
     id: string,
     categoryId: string,
+    userId: string
 }
 
 const videosData = new Map<string, VideoDataContent>([
-    ['FvOpPeKSf_4', {id: 'FvOpPeKSf_4', categoryId: 'games'}],
-    ['Uz8pCfNIs7k', {id: 'Uz8pCfNIs7k', categoryId: 'news'}],
-    ['M9z3ucb6f7c', {id: 'M9z3ucb6f7c', categoryId: 'sport'}],
-    ['2I2D7q0AsL8', {id: '2I2D7q0AsL8', categoryId: 'humor'}],
-    ['nRNHcCHbPx0', {id: 'nRNHcCHbPx0', categoryId: 'humor'}],
-    ['eAajijL6e0w', {id: 'eAajijL6e0w', categoryId: 'music'}],
-    ['N17ZDhB88Nk', {id: 'N17ZDhB88Nk', categoryId: 'games'}],
-    ['99ds4d88thk', {id: '99ds4d88thk', categoryId: 'games'}],
-    ['wgej_DhuoxA', {id: 'wgej_DhuoxA', categoryId: 'humor'}],
-    ['eQmSOvrk1_U', {id: 'eQmSOvrk1_U', categoryId: 'sport'}],
+    ['FvOpPeKSf_4', {userId: "0", id: 'FvOpPeKSf_4', categoryId: 'games'}],
+    ['Uz8pCfNIs7k', {userId: "0", id: 'Uz8pCfNIs7k', categoryId: 'news'}],
+    ['M9z3ucb6f7c', {userId: "0", id: 'M9z3ucb6f7c', categoryId: 'sport'}],
+    ['2I2D7q0AsL8', {userId: "0", id: '2I2D7q0AsL8', categoryId: 'humor'}],
+    ['nRNHcCHbPx0', {userId: "0", id: 'nRNHcCHbPx0', categoryId: 'humor'}],
+    ['eAajijL6e0w', {userId: "0", id: 'eAajijL6e0w', categoryId: 'music'}],
+    ['N17ZDhB88Nk', {userId: "0", id: 'N17ZDhB88Nk', categoryId: 'games'}],
+    ['99ds4d88thk', {userId: "0", id: '99ds4d88thk', categoryId: 'games'}],
+    ['wgej_DhuoxA', {userId: "0", id: 'wgej_DhuoxA', categoryId: 'humor'}],
+    ['eQmSOvrk1_U', {userId: "0", id: 'eQmSOvrk1_U', categoryId: 'sport'}],
 ]);
 
 export async function GET(request: Request) {
     const urlObject = new URL(request.url);
     const videoIdParam = urlObject.searchParams.get('videoId');
     const categoryIdParam = urlObject.searchParams.get('categoryId');
+    const userIdParam = urlObject.searchParams.get('userId');
     
     if (videoIdParam) {
         try {
@@ -50,9 +52,9 @@ export async function GET(request: Request) {
 
         const promises = [...videosData]
         .filter(data => categoryIdParam ? data[1].categoryId === categoryIdParam : true)
+        .filter(data => userIdParam ? data[1].userId === userIdParam : true)
         .map(async (data) => {
             const videoId = data[1].id;
-            const categoryId = data[1].categoryId;
 
             const rawResults = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
 
@@ -85,7 +87,7 @@ export async function POST(request: Request) {
         return Response.json({ ok: false, error: 'The video has already been added earlier.' }, { status: 400 });
     }
     
-    videosData.set(data.videoId, { id: data.videoId, categoryId: data.categoryId});
+    videosData.set(data.videoId, { userId: data.userId ,id: data.videoId, categoryId: data.categoryId});
 
     return Response.json({ ok: true });
 }

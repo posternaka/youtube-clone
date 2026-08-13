@@ -64,7 +64,8 @@ export const useAddVideoForm = () => {
 
     await fetch("/api/videos", {
       method: "POST",
-      body: JSON.stringify({ videoId: videoId, categoryId: data.videoCategory }),
+      // TODO: do user id 
+      body: JSON.stringify({ videoId: videoId, categoryId: data.videoCategory, userId: '123' }),
     });
   };
 

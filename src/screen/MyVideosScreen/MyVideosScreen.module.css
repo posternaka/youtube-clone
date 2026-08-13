@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form {
+  display: flex;
+  gap: 10px;
+  margin-top: 64px;
+}
+
+.label {
+  position: relative;
+}
+
+.input {
+  width: 500px;
+  height: 40px;
+  background: transparent;
+  padding: 8px 12px;
+  border: 1px solid #dddcdc;
+  border-radius: 12px;
+  color: white;
+
+  &::placeholder {
+    color: rgb(184, 184, 184);
+  }
+}
+
+.submit {
+  background: transparent;
+  padding: 8px 12px;
+  border: 1px solid #dddcdc;
+  border-radius: 12px;
+  color: white;
+}
+
+.error {
+  position: absolute;
+  margin-left: 10px;
+  margin-top: 3px;
+  color: rgb(173, 0, 0);
+}
+
+.iframe {
+  margin-top: 40px;
+}

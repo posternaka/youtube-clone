@@ -50,7 +50,7 @@ export const LeftMenu = () => {
           />
           Add video
         </Link>
-        <Link href="/profile/123" className={s.link}>
+        <Link href="/myVideos" className={s.link}>
           <Image
             unoptimized
             width="24"
