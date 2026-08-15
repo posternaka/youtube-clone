@@ -12,7 +12,7 @@ export const AddVideoScreen = () => {
   return (
     <div className={s.container}>
       <form className={s.form} onSubmit={onSubmit}>
-        <select {...register("videoCategory")}>
+        <select {...register("videoCategory")} className={s.select}>
           {VIDEO_CATEGORIES.map((data) => (
             <option key={data.id} value={data.title}>
               {data.title}

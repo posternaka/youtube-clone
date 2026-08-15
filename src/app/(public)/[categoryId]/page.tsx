@@ -64,5 +64,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     categories?.includes(id),
   );
 
-  return <HomeScreen data={data} categories={finalCategories} />;
+  return (
+    <HomeScreen
+      data={data}
+      categoryId={categoryId}
+      categories={finalCategories}
+    />
+  );
 }

@@ -50,6 +50,7 @@ export const useAddVideoForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
   
@@ -67,6 +68,8 @@ export const useAddVideoForm = () => {
       // TODO: do user id 
       body: JSON.stringify({ videoId: videoId, categoryId: data.videoCategory, userId: '123' }),
     });
+
+    reset();
   };
 
   return {

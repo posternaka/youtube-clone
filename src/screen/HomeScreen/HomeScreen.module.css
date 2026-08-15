@@ -5,10 +5,25 @@
 .categoriesContainer {
   display: flex;
   gap: 8px;
+  margin-bottom: 16px;
 }
 
 .categoriesLink {
   border: 1px solid white;
   border-radius: 12px;
   padding: 8px 16px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+}
+
+.activeCategoryLink {
+  background-color: white;
+  color: black;
+  pointer-events: none;
 }

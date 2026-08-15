@@ -7,15 +7,21 @@ import {
   DEFAULT_CATEGORY,
 } from "@/src/shared/constants/categories";
 
+import cn from "classnames";
 import s from "./HomeScreen.module.css";
 import { VideosList } from "@/src/widgets/VideosList";
 
 type HomeScreenProps = {
   data: GetAllVideosDto["data"];
+  categoryId: string;
   categories: typeof VIDEO_CATEGORIES;
 };
 
-export const HomeScreen = ({ data, categories }: HomeScreenProps) => {
+export const HomeScreen = ({
+  data,
+  categoryId,
+  categories,
+}: HomeScreenProps) => {
   return (
     <div className={s.container}>
       <div className={s.categoriesContainer}>
@@ -23,7 +29,9 @@ export const HomeScreen = ({ data, categories }: HomeScreenProps) => {
           <Link
             key={DEFAULT_CATEGORY.id}
             href={`/`}
-            className={s.categoriesLink}
+            className={cn(s.categoriesLink, {
+              [s.activeCategoryLink]: !categoryId,
+            })}
           >
             {DEFAULT_CATEGORY.title}
           </Link>
@@ -33,7 +41,9 @@ export const HomeScreen = ({ data, categories }: HomeScreenProps) => {
             <Link
               key={category.id}
               href={`/${category.id}`}
-              className={s.categoriesLink}
+              className={cn(s.categoriesLink, {
+                [s.activeCategoryLink]: category.id === categoryId,
+              })}
             >
               {category.title}
             </Link>
