@@ -13,7 +13,7 @@ import { VideosList } from "@/src/widgets/VideosList";
 
 type HomeScreenProps = {
   data: GetAllVideosDto["data"];
-  categoryId: string;
+  categoryId?: string;
   categories: typeof VIDEO_CATEGORIES;
 };
 
