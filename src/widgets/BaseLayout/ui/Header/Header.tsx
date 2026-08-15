@@ -21,13 +21,16 @@ export const Header = ({ profileId }: HeaderProps) => {
       </Link>
 
       <div className={s.partRight}>
-        <Link href="/editor/addVideo" className={s.createVideoLink}>
+        <Link href="/auth/login" className={s.createVideoLink}>
+          Sign In
+        </Link>
+        {/* <Link href="/editor/addVideo" className={s.createVideoLink}>
           Create
         </Link>
 
         <Link href={`/profile/${profileId}`} className={s.yourProfileLink}>
           <div className={s.hiddenText}>Move to profile</div>
-        </Link>
+        </Link> */}
       </div>
     </header>
   );
