@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { RegisterScreen } from "@/src/screen/RegisterScreen";
 
 export default async function RegisterPage() {
   try {
@@ -7,5 +7,5 @@ export default async function RegisterPage() {
     return <div>Something went wrong</div>;
   }
 
-  return <Link href="/auth/login">Login</Link>;
+  return <RegisterScreen />;
 }
