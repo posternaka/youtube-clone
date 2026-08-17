@@ -1,12 +1,14 @@
 import { OEmbedVideoInfo } from "@/src/shared/types/typesFromBackend";
 
+type VideoId = string;
+
 type VideoDataContent = {
-    id: string,
+    id: VideoId,
     categoryId: string,
     userId: string
 }
 
-const videosData = new Map<string, VideoDataContent>([
+const videosData = new Map<VideoId, VideoDataContent>([
     ['FvOpPeKSf_4', {userId: "0", id: 'FvOpPeKSf_4', categoryId: 'games'}],
     ['Uz8pCfNIs7k', {userId: "0", id: 'Uz8pCfNIs7k', categoryId: 'news'}],
     ['M9z3ucb6f7c', {userId: "0", id: 'M9z3ucb6f7c', categoryId: 'sport'}],
