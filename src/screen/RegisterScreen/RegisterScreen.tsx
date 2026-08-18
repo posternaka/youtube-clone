@@ -45,7 +45,7 @@ export const RegisterScreen = () => {
     const { nickname, password } = data;
 
     try {
-      await fetch("/api/users", {
+      await fetch("/api/users/register", {
         method: "POST",
         body: JSON.stringify({
           nickname,

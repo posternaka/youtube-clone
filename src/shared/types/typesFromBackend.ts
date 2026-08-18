@@ -32,3 +32,8 @@ export type OEmbedVideoInfo = {
     thumbnail_url: string,
     html: string
 }
+
+export type AuthUserDto = {
+  id: string,
+  nickname: string
+}

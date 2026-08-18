@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 
 import s from "./LoginScreen.module.css";
+import { useRouter } from "next/navigation";
+import { AuthUserDto } from "@/src/shared/types/typesFromBackend";
 
 const schema = z.object({
   nickname: z.string().min(1, "Min. 1 symbol"),
@@ -19,14 +21,32 @@ type Inputs = {
 };
 
 export const LoginScreen = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
 
-  const onSubmit = handleSubmit((data: Inputs) => {
+  const onSubmit = handleSubmit(async (data: Inputs) => {
     console.log("data", data);
+
+    const { nickname, password } = data;
+
+    try {
+      await fetch("/api/users/login", {
+        method: "POST",
+        body: JSON.stringify({
+          nickname,
+          password,
+        }),
+      });
+
+      router.replace("/");
+    } catch (error) {
+      console.error(error);
+    }
   });
 
   const hasNicknameInputError = !!errors.nickname?.message;

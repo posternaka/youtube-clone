@@ -1,15 +1,7 @@
 import crypto from "crypto";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 
-type UserId = string;
-
-type UserContent = {
-    id: UserId,
-    nickname: string,
-    password: string
-}
-
-const users = new Map<UserContent, UserContent>()
+import { users } from "../db";
 
 export async function POST(request: Request) {
     const data = await request.json();
@@ -25,7 +17,7 @@ export async function POST(request: Request) {
 
     console.log("hashPassword", hashPassword);
 
-    users.set(data.nickname, {id, nickname: data.nickname, password: hashPassword })
+    users.set(data.nickname, {id, nickname: data.nickname, password: hashPassword });
 
     return Response.json({ ok: true });
 }
