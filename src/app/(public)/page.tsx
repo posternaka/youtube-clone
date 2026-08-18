@@ -10,6 +10,8 @@ export default async function HomePage() {
     const getData = await fetch(`${process.env.SERVER_API_URL}/api/videos`);
     const response = (await getData.json()) as GetAllVideosDto;
 
+    const userToken = await fetch(`${process.env.SERVER_API_URL}/api/users`);
+
     data = response.data;
     categories = response.categories;
   } catch {
