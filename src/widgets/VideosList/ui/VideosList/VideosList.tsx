@@ -20,6 +20,7 @@ export const VideosList = ({ data }: VideosListProps) => {
           <Link href={`/video/${videoId}`} className={s.videoPreviewLink}>
             <Image
               fill
+              sizes="auto"
               src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
               alt={`video ${videoId}`}
               className={s.videoImg}

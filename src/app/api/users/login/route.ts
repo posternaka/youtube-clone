@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     const cookiesStore = await cookies();
 
     cookiesStore.set('x-auth-token', jwt, {
-        maxAge: 40,
+        maxAge: 10000,
         httpOnly: true,
         secure: true
     });
