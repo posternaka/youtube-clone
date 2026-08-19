@@ -3,10 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 type HeaderProps = {
-  profileId: string;
+  userId?: string;
 };
 
-export const Header = ({ profileId }: HeaderProps) => {
+export const Header = ({ userId }: HeaderProps) => {
   return (
     <header className={s.header}>
       <Link href="/">
@@ -21,16 +21,21 @@ export const Header = ({ profileId }: HeaderProps) => {
       </Link>
 
       <div className={s.partRight}>
-        <Link href="/auth/login" className={s.createVideoLink}>
-          Sign In
-        </Link>
-        {/* <Link href="/editor/addVideo" className={s.createVideoLink}>
-          Create
-        </Link>
+        {userId ? (
+          <>
+            <Link href="/editor/addVideo" className={s.createVideoLink}>
+              Create
+            </Link>
 
-        <Link href={`/profile/${profileId}`} className={s.yourProfileLink}>
-          <div className={s.hiddenText}>Move to profile</div>
-        </Link> */}
+            <Link href={`/profile/${userId}`} className={s.yourProfileLink}>
+              <div className={s.hiddenText}>Move to profile</div>
+            </Link>
+          </>
+        ) : (
+          <Link href="/auth/login" className={s.createVideoLink}>
+            Sign In
+          </Link>
+        )}
       </div>
     </header>
   );

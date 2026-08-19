@@ -1,9 +1,15 @@
+import { withUserInfo } from "@/src/shared/hoc/withUserInfo";
 import { BaseLayout } from "../../widgets/BaseLayout";
+import { AuthUserDto } from "@/src/shared/types/typesFromBackend";
 
-export default function PublickLayout({
+function PublickLayout({
   children,
+  user,
 }: {
   children: React.ReactNode;
+  user?: AuthUserDto;
 }) {
-  return <BaseLayout>{children}</BaseLayout>;
+  return <BaseLayout userId={user?.id}>{children}</BaseLayout>;
 }
+
+export default withUserInfo(PublickLayout);
